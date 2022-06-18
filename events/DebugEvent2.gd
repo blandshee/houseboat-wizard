@@ -1,39 +1,44 @@
 extends Control
 
+enum {BELLY, BACK}
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 onready var root = get_node("/root/Travel")
-var bet
-var bellyWin
-var landing
+var bet : int
+var bellyWin : bool
+var landing : String
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.connect("tree_exiting", root, "_on_event_end")
-	
-	if randi()%2 == 0:
-		bellyWin = false
-		landing = "back"
-	else:
+
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+
+	var _error_code = self.connect("tree_exiting", root, "_on_event_end")
+	if _error_code != 0:
+		print("Something went wrong with the signal connection: ", _error_code)
+
+	var flop = rng.randi_range(0,1)
+	print(flop)
+
+	if flop == BELLY:
 		bellyWin = true
 		landing = "belly"
-	
-	randomize()
-	
+	else:
+		bellyWin = false
+		landing = "back"
+
+
 	#cant bet if no diamonds
 	if root.debugDiamond == 0:
 		$Buttons/BackButton.visible = false
 		$Buttons/BellyButton.visible = false
 	else:
 		# random int between 1 and #debugs
-		bet = randi() % root.debugDiamond +1
+		bet = rng.randi_range( 1, root.debugDiamond +1)
 		print(str(bellyWin) + ", " + str(bet))
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+# no update loop, everything is event handlers and helper functions
 
 func betWin():
 	$mainText.text = "\"" + str(bet) + "!\" the seal yells, right before he lands on his "
@@ -59,9 +64,9 @@ func _on_BellyButton_pressed():
 	$Buttons/DeclineButton.visible = false
 	$Buttons/EndButton.visible = true
 	if bellyWin:
-		betLose()
-	else:
 		betWin()
+	else:
+		betLose()
 
 
 func _on_BackButton_pressed():
@@ -69,7 +74,7 @@ func _on_BackButton_pressed():
 	$Buttons/BellyButton.visible = false
 	$Buttons/DeclineButton.visible = false
 	$Buttons/EndButton.visible = true
-	if !bellyWin:
+	if bellyWin:
 		betLose()
 	else:
 		betWin()
