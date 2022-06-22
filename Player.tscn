@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://assets/character_wizard.png" type="Texture" id=2]
+[ext_resource path="res://assets/cross.png" type="Texture" id=3]
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 8.0
+height = 0.0
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 160, 192 )
+collision_layer = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CharacterWizard" type="Sprite" parent="."]
+position = Vector2( 0, -8 )
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = -1.5708
+shape = SubResource( 3 )
+
+[node name="Spawn" type="Position2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Spawn"]
+scale = Vector2( 0.18, 0.18 )
+texture = ExtResource( 3 )

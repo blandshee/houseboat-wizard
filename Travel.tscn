@@ -1,13 +1,12 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://TravelParallax.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/boatsmall.png" type="Texture" id=2]
 [ext_resource path="res://EventTimer.gd" type="Script" id=3]
 [ext_resource path="res://assets/gemBlue.png" type="Texture" id=4]
-[ext_resource path="res://Player.gd" type="Script" id=5]
-[ext_resource path="res://assets/character_wizard.png" type="Texture" id=6]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://TestSlime.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Travel.gd" type="Script" id=7]
-[ext_resource path="res://assets/cross.png" type="Texture" id=10]
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -40,10 +39,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 3 ), Vector2( 0, 0 ) ]
 }
-
-[sub_resource type="CapsuleShape2D" id=3]
-radius = 8.0
-height = 0.0
 
 [node name="Travel" type="Node2D"]
 script = ExtResource( 7 )
@@ -162,31 +157,20 @@ __meta__ = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="Hunt"]
-position = Vector2( 168, 192 )
-current = true
+position = Vector2( 160, 192 )
 
 [node name="YSort" type="YSort" parent="Hunt"]
 
-[node name="Player" type="KinematicBody2D" parent="Hunt/YSort"]
-position = Vector2( 168, 192 )
-script = ExtResource( 5 )
+[node name="TestSlime2" parent="Hunt/YSort" instance=ExtResource( 6 )]
+position = Vector2( 268, 166 )
 
-[node name="CharacterWizard" type="Sprite" parent="Hunt/YSort/Player"]
-position = Vector2( 0, -8 )
-texture = ExtResource( 6 )
+[node name="TestSlime3" parent="Hunt/YSort" instance=ExtResource( 6 )]
+position = Vector2( 212, 53 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hunt/YSort/Player"]
-rotation = -1.5708
-shape = SubResource( 3 )
+[node name="Player" parent="Hunt/YSort" instance=ExtResource( 5 )]
 
-[node name="Spawn" type="Position2D" parent="Hunt/YSort/Player"]
-
-[node name="Sprite" type="Sprite" parent="Hunt/YSort/Player/Spawn"]
-scale = Vector2( 0.18, 0.18 )
-texture = ExtResource( 10 )
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Hunt/YSort/Player"]
-remote_path = NodePath("../../../Camera2D")
+[node name="TestSlime" parent="Hunt/YSort" instance=ExtResource( 6 )]
+position = Vector2( 66, 105 )
 
 [connection signal="timeout" from="WaveTimer" to="." method="_on_WaveTimer_timeout"]
 [connection signal="timeout" from="EventTimer" to="." method="_on_EventTimer_timeout"]

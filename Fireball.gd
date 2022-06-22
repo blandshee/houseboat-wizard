@@ -4,7 +4,10 @@ extends Area2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var speed = 200
+export var speed = 200
+export var damage = 1
+#export var target = Vector2.ZERO
+
 var trajectory = Vector2.ZERO
 var setTemp = false
 
@@ -16,14 +19,21 @@ func _ready():
 	trajectory = (get_global_mouse_position() - self.global_position ).normalized()
 	print(str(get_global_mouse_position()) + " / " + str(get_global_position()) + " / " + str(trajectory))
 
-func _process(delta):
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta):
 	#THIS CODE SUCKS: pls make fireballs spawn at the player spawn node
 	if self.global_position != Vector2.ZERO && !setTemp:
 		trajectory = (get_global_mouse_position() - self.global_position ).normalized()
 		setTemp = true
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+	
 	#MOVE TOWARDS TRAJECTORY
 	position += trajectory * speed * delta
 	rotation_degrees += 10
+
+
+func _on_Timer_timeout():
+	queue_free()
+
+
+func _on_Fireball_area_entered(area):
+	queue_free()
