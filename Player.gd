@@ -6,7 +6,7 @@ export var MAX_SPEED = 80
 export var FRICTION = 500
 var velocity = Vector2.ZERO
 
-const FireballScene : PackedScene = preload("res://fireball.tscn")
+const FireballScene : PackedScene = preload("res://assets/hunt/spells/fireball.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,6 +37,8 @@ func _input(event):
 		#print("Mouse Motion at: ", event.position)
 
 func fireball():
-	var b = FireballScene.instance()
-	get_parent().add_child(b)
-	b.position = $Spawn.global_position
+	if $Attack1Timer.get_time_left() == 0:
+		var b = FireballScene.instance()
+		get_parent().add_child(b)
+		b.position = $Spawn.global_position
+		$Attack1Timer.start()

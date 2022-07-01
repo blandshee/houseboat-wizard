@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://boxen/Hurtbox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/hunt/trees/pinetreefront.png" type="Texture" id=2]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 9.0
+height = 28.0
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 12.3636
+height = 44.9091
+
+[node name="Tree" type="Area2D"]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -1, -7 )
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -0.999999, -1.99999 )
+scale = Vector2( 0.45098, 0.45098 )
+texture = ExtResource( 2 )
+offset = Vector2( 0, -90 )
+
+[node name="Hurtbox" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, -63 )
+scale = Vector2( 0.647059, 0.647059 )
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2( -1.54546, 88.0909 )
+rotation = 1.5708
+shape = SubResource( 1 )

@@ -10,11 +10,8 @@ height = 0.0
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 160, 192 )
-collision_layer = 2
+collision_layer = 3
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="CharacterWizard" type="Sprite" parent="."]
 position = Vector2( 0, -8 )
@@ -29,3 +26,7 @@ shape = SubResource( 3 )
 [node name="Sprite" type="Sprite" parent="Spawn"]
 scale = Vector2( 0.18, 0.18 )
 texture = ExtResource( 3 )
+
+[node name="Attack1Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
